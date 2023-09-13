@@ -9,8 +9,7 @@ def test_empty_graph():
     graph = Graph()
     expected = {"num_of_nodes": 0, "num_of_edges": 0, "set_of_labels": set()}
 
-    gw = GraphWorker()
-    gw.update_graph(graph)
+    gw = GraphWorker(graph)
 
     assert expected == gw.get_graph_info()
 
@@ -37,8 +36,7 @@ def test_save_as_dot_file():
     expected_path = path.join(curr_path, "expected_graph_gw.dot")
     actual_path = path.join(curr_path, "actual_graph_gw.dot")
 
-    gw = GraphWorker()
-    gw.update_graph(graph)
+    gw = GraphWorker(graph)
 
     is_created = gw.save_as_dot_file(actual_path)
 

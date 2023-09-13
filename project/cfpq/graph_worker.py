@@ -4,31 +4,23 @@ from networkx.drawing.nx_pydot import to_pydot
 
 
 class GraphWorker:
-    def __init__(self):
-        self.__graph_info = {
-            "num_of_nodes": 0,
-            "num_of_edges": 0,
-            "set_of_labels": set(),
-        }
-        self.__graph = Graph()
-
-    def __update_graph_info(self) -> None:
-        self.__graph_info["num_of_nodes"] = self.__graph.number_of_nodes()
-        self.__graph_info["num_of_edges"] = self.__graph.number_of_edges()
-        self.__graph_info["set_of_labels"] = {
-            label for _, _, label in self.__graph.edges.data("label")
-        }
+    def __init__(self, graph: Graph = Graph()):
+        self.__graph = graph
 
     def load_graph_by_name(self, name: str) -> None:
         self.__graph = graph_from_csv(path=download(name))
-        self.__update_graph_info()
 
     def update_graph(self, graph: Graph) -> None:
         self.__graph = graph
-        self.__update_graph_info()
 
     def get_graph_info(self) -> dict:
-        return self.__graph_info
+        return {
+            "num_of_nodes": self.__graph.number_of_nodes(),
+            "num_of_edges": self.__graph.number_of_edges(),
+            "set_of_labels": {
+                label for _, _, label in self.__graph.edges.data("label")
+            },
+        }
 
     def save_as_dot_file(self, path: str) -> bool:
         return to_pydot(self.__graph).write(path)

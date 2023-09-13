@@ -11,8 +11,7 @@ def load_graph_info_by_name(name: str) -> dict:
 def create_and_save_two_cycles_graph(
     first_cycle: tuple[int, str], second_cycle: tuple[int, str], path: str
 ) -> bool:
-    gw = GraphWorker()
-    gw.update_graph(create_labeled_two_cycles_graph(*first_cycle, *second_cycle))
+    gw = GraphWorker(create_labeled_two_cycles_graph(*first_cycle, *second_cycle))
     return gw.save_as_dot_file(path=path)
 
 
