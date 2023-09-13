@@ -1,12 +1,12 @@
 from os import path
 
-from networkx import Graph, MultiDiGraph
+from networkx import MultiDiGraph
 
 from project.cfpq.graph_worker import GraphWorker
 
 
 def test_empty_graph():
-    graph = Graph()
+    graph = MultiDiGraph()
     expected = {"num_of_nodes": 0, "num_of_edges": 0, "set_of_labels": set()}
 
     gw = GraphWorker(graph)

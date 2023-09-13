@@ -13,8 +13,3 @@ def create_and_save_two_cycles_graph(
 ) -> bool:
     gw = GraphWorker(create_labeled_two_cycles_graph(*first_cycle, *second_cycle))
     return gw.save_as_dot_file(path=path)
-
-
-if __name__ == "__main__":
-    print(load_graph_info_by_name("bzip"))
-    create_and_save_two_cycles_graph((5, "a"), (5, "b"), "test.dot")
