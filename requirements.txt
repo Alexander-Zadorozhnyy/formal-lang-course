@@ -3,6 +3,6 @@ black
 cfpq-data
 networkx
 pre-commit
-pydot
+pygraphviz
 pytest
 scipy

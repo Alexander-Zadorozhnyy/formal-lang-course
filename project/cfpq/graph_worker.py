@@ -1,6 +1,5 @@
 from cfpq_data import graph_from_csv, download
 from networkx import MultiDiGraph
-from networkx.drawing.nx_pydot import to_pydot
 from networkx.drawing.nx_agraph import write_dot
 
 
