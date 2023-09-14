@@ -1,6 +1,6 @@
 from cfpq_data import graph_from_csv, download
 from networkx import MultiDiGraph
-from networkx.drawing.nx_agraph import write_dot
+from networkx.drawing.nx_pydot import to_pydot
 
 
 class GraphWorker:
@@ -23,4 +23,4 @@ class GraphWorker:
         }
 
     def save_as_dot_file(self, path: str) -> bool:
-        return write_dot(self.__graph, path)
+        return to_pydot(self.__graph).write(path)

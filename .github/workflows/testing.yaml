@@ -36,16 +36,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Setup Graphviz for windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          choco install graphviz
-          python -m pip install --use-pep517 `
-                  --config-setting="--global-option=build_ext" `
-                  --config-setting="--global-option="-IC:\Program Files (x86)\Graphviz\include" `
-                  --config-setting="--global-option="-LC:\Program Files (x86)\Graphviz\lib" `
-                  pygraphviz
-
       # Install requirements
       - name: Install requirements
 
@@ -54,19 +44,6 @@ jobs:
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -r requirements.txt
           python -m pip list
-
-      - name: Setup Graphviz for windows
-        if: matrix.os != 'windows-latest'
-        uses: ts-graphviz/setup-graphviz@v1
-
-
-      # Install requirements
-      - name: Install PyGraphviz
-
-        # Runs command-line programs using the operating system's shell
-        run: |
-          sudo apt-get install graphviz graphviz-dev
-          pip install pygraphviz
 
       # Install pre-commit from .pre-commit-config.yaml
       - name: Install pre-commit
