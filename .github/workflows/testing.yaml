@@ -42,8 +42,8 @@ jobs:
           choco install graphviz
           python -m pip install --use-pep517 `
                   --config-setting="--global-option=build_ext" `
-                  --config-setting="--global-option="-IC:\Program Files\Graphviz\include" `
-                  --config-setting="--global-option="-LC:\Program Files\Graphviz\lib" `
+                  --config-setting="--global-option="-IC:\Program Files (x86)\Graphviz\include" `
+                  --config-setting="--global-option="-LC:\Program Files (x86)\Graphviz\lib" `
                   pygraphviz
 
       # Install requirements
