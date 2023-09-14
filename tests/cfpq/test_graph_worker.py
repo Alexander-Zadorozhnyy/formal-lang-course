@@ -38,9 +38,7 @@ def test_save_as_dot_file():
 
     gw = GraphWorker(graph)
 
-    is_created = gw.save_as_dot_file(actual_path)
-
-    assert is_created
+    gw.save_as_dot_file(actual_path)
 
     with open(expected_path, "r") as expected_file:
         with open(actual_path, "r") as actual_file:

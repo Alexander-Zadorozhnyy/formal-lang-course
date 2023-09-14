@@ -39,13 +39,11 @@ def test_create_and_save_two_cycles_graph():
     expected_path = path.join(curr_path, "expected_graph_main.dot")
     actual_path = path.join(curr_path, "actual_graph_main.dot")
 
-    is_created = create_and_save_two_cycles_graph(
+    create_and_save_two_cycles_graph(
         first_cycle=(5, "abc"),
         second_cycle=(5, "def"),
         path=actual_path,
     )
-
-    assert is_created
 
     with open(expected_path, "r") as expected_file:
         with open(actual_path, "r") as actual_file:
