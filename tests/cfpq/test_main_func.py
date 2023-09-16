@@ -1,6 +1,6 @@
 from os import path
 
-from project.cfpq.main import load_graph_info_by_name, create_and_save_two_cycles_graph
+from project.cfpq.func import load_graph_info_by_name, create_and_save_two_cycles_graph
 
 
 def test_load_graph_info_by_name():

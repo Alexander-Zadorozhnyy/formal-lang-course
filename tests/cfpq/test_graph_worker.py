@@ -2,7 +2,7 @@ from os import path
 
 from networkx import MultiDiGraph
 
-from project.cfpq.graph_worker import GraphWorker
+from project.graph.graph_worker import GraphWorker
 
 
 def test_empty_graph():

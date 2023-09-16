@@ -1,4 +1,4 @@
-from project.cfpq.graph_worker import GraphWorker
+from project.graph.graph_worker import GraphWorker
 from project.cfpq.utils import create_labeled_two_cycles_graph
 
 
