@@ -14,7 +14,9 @@ def test_convert_to_nfa_with_labels():
         expected.add_start_state(s), expected.add_final_state(s)
     expected.add_transitions([(0, "test_one", 1), (1, "test_two", 2)])
 
-    gw = GraphWorker(MultiDiGraph([(0, 1, {"label": "test_one"}), (1, 2, {"label": "test_two"})]))
+    gw = GraphWorker(
+        MultiDiGraph([(0, 1, {"label": "test_one"}), (1, 2, {"label": "test_two"})])
+    )
 
     assert expected == gw.convert_to_nfa()
 
