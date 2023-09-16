@@ -3,5 +3,6 @@ black
 cfpq-data
 networkx
 pre-commit
+pyformlang
 pytest
 scipy
