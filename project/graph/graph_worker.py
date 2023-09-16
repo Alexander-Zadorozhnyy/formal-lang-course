@@ -23,14 +23,17 @@ class GraphWorker:
             },
         }
 
-    def convert_to_nfa(self, start: set[int], final: set[int]) -> NonDA:
+    def convert_to_nfa(self, start: set[int] = None, final: set[int] = None) -> NonDA:
         node_types = {"is_start": start, "is_final": final}
 
         for node_type, nodes in node_types.items():
             if not nodes:
                 view = self.__graph.nodes.data(data=node_type, default=False)
-                if not any(is_start for _, is_start in view):
-                    nodes = set(self.__graph.nodes)
+                nodes = (
+                    set(self.__graph.nodes)
+                    if not any(is_start for _, is_start in view)
+                    else {}
+                )
 
             for node in nodes:
                 self.__graph.nodes[node][node_type] = True
