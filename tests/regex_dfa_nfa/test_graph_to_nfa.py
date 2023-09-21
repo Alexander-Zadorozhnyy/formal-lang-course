@@ -1,9 +1,13 @@
+from os import path
+
 from networkx import MultiDiGraph
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton
 
 from project.cfpq.utils import create_labeled_two_cycles_graph
 from project.graph.graph_worker import GraphWorker
 from tests.utils import check_is_dot_files_the_same
+
+CURR_PATH = path.dirname(path.realpath(__file__))
 
 
 def test_convert_to_nfa_empty():
@@ -18,7 +22,7 @@ def test_convert_to_nfa_with_labels():
     gw.convert_to_nfa().write_as_dot("actual_nfa_with_labels.dot")
 
     assert check_is_dot_files_the_same(
-        "expected_nfa_with_labels.dot", "actual_nfa_with_labels.dot"
+        CURR_PATH, "expected_nfa_with_labels.dot", "actual_nfa_with_labels.dot"
     )
 
 
@@ -27,7 +31,7 @@ def test_convert_to_nfa_without_labels():
     gw.convert_to_nfa().write_as_dot("actual_nfa_without_labels.dot")
 
     assert check_is_dot_files_the_same(
-        "expected_nfa_without_labels.dot", "actual_nfa_without_labels.dot"
+        CURR_PATH, "expected_nfa_without_labels.dot", "actual_nfa_without_labels.dot"
     )
 
 
@@ -40,7 +44,7 @@ def test_convert_to_nfa_with_graph_start_nodes():
     gw.convert_to_nfa().write_as_dot("actual_nfa_start_nodes.dot")
 
     assert check_is_dot_files_the_same(
-        "expected_nfa_start_nodes.dot", "actual_nfa_start_nodes.dot"
+        CURR_PATH, "expected_nfa_start_nodes.dot", "actual_nfa_start_nodes.dot"
     )
 
 
@@ -51,6 +55,7 @@ def test_convert_graph_to_nfa_with_graph_final_nodes():
     gw.convert_to_nfa().write_as_dot("actual_nfa_with_graph_final_nodes.dot")
 
     assert check_is_dot_files_the_same(
+        CURR_PATH,
         "expected_nfa_with_graph_final_nodes.dot",
         "actual_nfa_with_graph_final_nodes.dot",
     )
@@ -64,6 +69,7 @@ def test_convert_graph_to_nfa_with_graph_start_final_nodes():
     gw.convert_to_nfa().write_as_dot("actual_nfa_with_graph_start_final_nodes.dot")
 
     assert check_is_dot_files_the_same(
+        CURR_PATH,
         "expected_nfa_with_graph_start_final_nodes.dot",
         "actual_nfa_with_graph_start_final_nodes.dot",
     )
@@ -74,7 +80,9 @@ def test_convert_graph_to_nfa_with_start_nodes():
     gw.convert_to_nfa(start={0}).write_as_dot("actual_nfa_with_start_nodes.dot")
 
     assert check_is_dot_files_the_same(
-        "expected_nfa_with_start_nodes.dot", "actual_nfa_with_start_nodes.dot"
+        CURR_PATH,
+        "expected_nfa_with_start_nodes.dot",
+        "actual_nfa_with_start_nodes.dot",
     )
 
 
@@ -83,7 +91,9 @@ def test_convert_graph_to_nfa_with_final_nodes():
     gw.convert_to_nfa(final={0}).write_as_dot("actual_nfa_with_final_nodes.dot")
 
     assert check_is_dot_files_the_same(
-        "expected_nfa_with_final_nodes.dot", "actual_nfa_with_final_nodes.dot"
+        CURR_PATH,
+        "expected_nfa_with_final_nodes.dot",
+        "actual_nfa_with_final_nodes.dot",
     )
 
 
@@ -94,6 +104,7 @@ def test_convert_graph_to_nfa_with_final_start_nodes():
     )
 
     assert check_is_dot_files_the_same(
+        CURR_PATH,
         "expected_nfa_with_final_start_nodes.dot",
         "actual_nfa_with_final_start_nodes.dot",
     )
@@ -111,5 +122,7 @@ def test_convert_two_cycled_graph_to_nfa():
     gw.convert_to_nfa(final={0}).write_as_dot("actual_two_cycled_graph_to_nfa.dot")
 
     assert check_is_dot_files_the_same(
-        "expected_two_cycled_graph_to_nfa.dot", "actual_two_cycled_graph_to_nfa.dot"
+        CURR_PATH,
+        "expected_two_cycled_graph_to_nfa.dot",
+        "actual_two_cycled_graph_to_nfa.dot",
     )
