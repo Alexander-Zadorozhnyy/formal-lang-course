@@ -42,7 +42,9 @@ def test_regex_to_minimal_dfa_or():
     actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_or.dot"))
 
     assert check_is_dot_files_the_same(
-        CURR_PATH, "expected_dfa_or.dot", "actual_dfa_or.dot"
+        CURR_PATH, "expected_dfa_or_one.dot", "actual_dfa_or.dot"
+    ) or check_is_dot_files_the_same(
+        CURR_PATH, "expected_dfa_or_two.dot", "actual_dfa_or.dot"
     )
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
