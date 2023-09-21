@@ -5,6 +5,8 @@ from networkx import MultiDiGraph
 from project.graph.graph_worker import GraphWorker
 from tests.utils import check_is_dot_files_the_same
 
+CURR_PATH = path.dirname(path.realpath(__file__))
+
 
 def test_empty_graph():
     graph = MultiDiGraph()
@@ -33,11 +35,11 @@ def test_save_as_dot_file():
     graph.add_edge(15, 10, label="b")
     graph.add_edge(10, 5, label="c")
 
-    curr_path = path.dirname(path.realpath(__file__))
-    expected_path = path.join(curr_path, "expected_graph_gw.dot")
-    actual_path = path.join(curr_path, "actual_graph_gw.dot")
+    actual_path = path.join(CURR_PATH, "actual_graph_gw.dot")
 
     gw = GraphWorker(graph)
     gw.save_as_dot_file(actual_path)
 
-    assert check_is_dot_files_the_same(expected_path, actual_path)
+    assert check_is_dot_files_the_same(
+        CURR_PATH, "expected_graph_gw.dot", "actual_graph_gw.dot"
+    )

@@ -4,9 +4,14 @@ from pyformlang.finite_automaton import DeterministicFiniteAutomaton
 from pyformlang.regular_expression import Regex
 
 from project.regex_dfa_builder.min_dfa_builder import regex_to_minimal_dfa
-from tests.utils import check_is_dot_files_the_same
 
 CURR_PATH = path.dirname(path.realpath(__file__))
+
+
+def check_is_dot_files_the_same(local_path, path_one, path_two):
+    with open(path.join(local_path, path_one), "r") as expected_file:
+        with open(path.join(local_path, path_two), "r") as actual_file:
+            return sorted(expected_file.readlines()) == sorted(actual_file.readlines())
 
 
 def test_regex_to_minimal_dfa():
