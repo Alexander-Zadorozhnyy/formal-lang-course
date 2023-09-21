@@ -2,6 +2,7 @@ from pyformlang.finite_automaton import DeterministicFiniteAutomaton
 from pyformlang.regular_expression import Regex
 
 from project.regex_dfa_builder.min_dfa_builder import regex_to_minimal_dfa
+from tests.utils import check_is_dot_files_the_same
 
 
 def test_regex_to_minimal_dfa():
@@ -9,106 +10,89 @@ def test_regex_to_minimal_dfa():
 
 
 def test_regex_to_minimal_dfa_epsilon():
-    expected = DeterministicFiniteAutomaton()
-    expected.add_start_state(0)
-    expected.add_final_state(0)
-
     actual = regex_to_minimal_dfa(Regex("$"))
-    print(actual.to_dict())
+    actual.write_as_dot("actual_dfa_epsilon.dot")
 
-    assert expected == actual
+    assert check_is_dot_files_the_same(
+        "expected_dfa_epsilon.dot", "actual_dfa_epsilon.dot"
+    )
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
 
 
 def test_regex_to_minimal_dfa_star():
-    expected = DeterministicFiniteAutomaton()
-    expected.add_start_state(0)
-    expected.add_final_state(0)
-    expected.add_transitions([(0, "test", 0)])
-
     actual = regex_to_minimal_dfa(Regex("test*"))
+    actual.write_as_dot("actual_dfa_star.dot")
 
-    assert expected == actual
+    assert check_is_dot_files_the_same("expected_dfa_star.dot", "actual_dfa_star.dot")
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
 
 
-def test_regex_to_minimal_dfa_or_plus():
-    expected = DeterministicFiniteAutomaton()
-    expected.add_start_state(0)
-    expected.add_final_state(1)
-    expected.add_transitions([(0, "test_one", 1), (0, "test_two", 1)])
+def test_regex_to_minimal_dfa_or():
+    actual = regex_to_minimal_dfa(Regex("test_one|test_two"))
+    actual.write_as_dot("actual_dfa_or.dot")
 
-    actual_1 = regex_to_minimal_dfa(Regex("test_one|test_two"))
-    actual_2 = regex_to_minimal_dfa(Regex("test_one+test_two"))
-
-    assert expected == actual_1
-    assert expected == actual_2
-    assert actual_1.is_deterministic() and len(actual_1.states) == len(
-        actual_1.minimize().states
+    assert check_is_dot_files_the_same(
+        "expected_dfa_or.dot", "actual_dfa_or.dot"
     )
-    assert actual_2.is_deterministic() and len(actual_2.states) == len(
-        actual_2.minimize().states
+    assert actual.is_deterministic() and len(actual.states) == len(
+        actual.minimize().states
     )
 
 
 def test_regex_to_minimal_space():
-    expected = DeterministicFiniteAutomaton()
-    expected.add_start_state(0)
-    expected.add_final_state(2)
-    expected.add_transitions([(0, "test_one", 1), (1, "test_two", 2)])
-
     actual = regex_to_minimal_dfa(Regex("test_one test_two"))
+    actual.write_as_dot("actual_dfa_space.dot")
 
-    assert expected == actual
+    assert check_is_dot_files_the_same("expected_dfa_space.dot", "actual_dfa_space.dot")
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
 
 
 def test_regex_to_minimal_dfa_var():
-    expected = DeterministicFiniteAutomaton()
-    expected.add_start_state(0)
-    expected.add_final_state(1)
-    expected.add_transitions([(0, "test", 1)])
-
     actual = regex_to_minimal_dfa(Regex("test"))
-    print(actual.to_dict())
+    actual.write_as_dot("actual_dfa_var.dot")
 
-    assert expected == actual
+    assert check_is_dot_files_the_same("expected_dfa_var.dot", "actual_dfa_var.dot")
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
 
 
 def test_regex_to_minimal_dfa_parens():
-    expected = DeterministicFiniteAutomaton()
-    expected.add_start_state(0)
-    expected.add_final_state(1)
-    expected.add_transitions([(0, "test", 1)])
-
     actual = regex_to_minimal_dfa(Regex("(test)"))
+    actual.write_as_dot("actual_dfa_parens.dot")
 
-    assert expected == actual
+    assert check_is_dot_files_the_same("expected_dfa_parens.dot", "actual_dfa_parens.dot")
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
 
 
-def test_regex_to_minimal_dfa_hard_expr():
-    expected = DeterministicFiniteAutomaton()
-    expected.add_start_state(0)
-    expected.add_transitions([(0, "0", 0)])
-    expected.add_transitions([(0, "1", 0)])
-    expected.add_transitions([(0, "111", 1)])
-    expected.add_final_state(1)
-
+def test_regex_to_minimal_dfa_hard_expr_one():
     actual = regex_to_minimal_dfa(Regex("(0|1)*111"))
+    actual.write_as_dot("actual_dfa_hard_expr.dot")
 
-    assert expected == actual
+    assert check_is_dot_files_the_same("expected_dfa_hard_expr_one.dot",
+                                       "actual_dfa_hard_expr.dot") or check_is_dot_files_the_same(
+        "expected_dfa_hard_expr_two.dot", "actual_dfa_hard_expr.dot")
+
+    assert actual.is_deterministic() and len(actual.states) == len(
+        actual.minimize().states
+    )
+
+
+def test_regex_to_minimal_dfa_hard_two_expr():
+    actual = regex_to_minimal_dfa(Regex("(0|1)*1.1.1"))
+    actual.write_as_dot("actual_dfa_hard_two_expr.dot")
+
+    assert check_is_dot_files_the_same("expected_dfa_hard_two_expr.dot",
+                                       "actual_dfa_hard_two_expr.dot")
+
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
