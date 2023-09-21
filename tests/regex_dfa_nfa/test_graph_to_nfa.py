@@ -17,14 +17,18 @@ def test_convert_to_nfa_with_labels():
     )
     gw.convert_to_nfa().write_as_dot("actual_nfa_with_labels.dot")
 
-    assert check_is_dot_files_the_same("expected_nfa_with_labels.dot", "actual_nfa_with_labels.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_with_labels.dot", "actual_nfa_with_labels.dot"
+    )
 
 
 def test_convert_to_nfa_without_labels():
     gw = GraphWorker(MultiDiGraph([(0, 1), (1, 2), (2, 3)]))
     gw.convert_to_nfa().write_as_dot("actual_nfa_without_labels.dot")
 
-    assert check_is_dot_files_the_same("expected_nfa_without_labels.dot", "actual_nfa_without_labels.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_without_labels.dot", "actual_nfa_without_labels.dot"
+    )
 
 
 def test_convert_to_nfa_with_graph_start_nodes():
@@ -35,7 +39,9 @@ def test_convert_to_nfa_with_graph_start_nodes():
     gw = GraphWorker(graph)
     gw.convert_to_nfa().write_as_dot("actual_nfa_start_nodes.dot")
 
-    assert check_is_dot_files_the_same("expected_nfa_start_nodes.dot", "actual_nfa_start_nodes.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_start_nodes.dot", "actual_nfa_start_nodes.dot"
+    )
 
 
 def test_convert_graph_to_nfa_with_graph_final_nodes():
@@ -44,8 +50,10 @@ def test_convert_graph_to_nfa_with_graph_final_nodes():
     gw = GraphWorker(graph)
     gw.convert_to_nfa().write_as_dot("actual_nfa_with_graph_final_nodes.dot")
 
-    assert check_is_dot_files_the_same("expected_nfa_with_graph_final_nodes.dot",
-                                       "actual_nfa_with_graph_final_nodes.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_with_graph_final_nodes.dot",
+        "actual_nfa_with_graph_final_nodes.dot",
+    )
 
 
 def test_convert_graph_to_nfa_with_graph_start_final_nodes():
@@ -55,32 +63,40 @@ def test_convert_graph_to_nfa_with_graph_start_final_nodes():
     gw = GraphWorker(graph)
     gw.convert_to_nfa().write_as_dot("actual_nfa_with_graph_start_final_nodes.dot")
 
-    assert check_is_dot_files_the_same("expected_nfa_with_graph_start_final_nodes.dot",
-                                       "actual_nfa_with_graph_start_final_nodes.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_with_graph_start_final_nodes.dot",
+        "actual_nfa_with_graph_start_final_nodes.dot",
+    )
 
 
 def test_convert_graph_to_nfa_with_start_nodes():
     gw = GraphWorker(MultiDiGraph([(0, 1), (1, 2), (2, 3)]))
     gw.convert_to_nfa(start={0}).write_as_dot("actual_nfa_with_start_nodes.dot")
 
-    assert check_is_dot_files_the_same("expected_nfa_with_start_nodes.dot",
-                                       "actual_nfa_with_start_nodes.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_with_start_nodes.dot", "actual_nfa_with_start_nodes.dot"
+    )
 
 
 def test_convert_graph_to_nfa_with_final_nodes():
     gw = GraphWorker(MultiDiGraph([(0, 1), (1, 2), (2, 3)]))
     gw.convert_to_nfa(final={0}).write_as_dot("actual_nfa_with_final_nodes.dot")
 
-    assert check_is_dot_files_the_same("expected_nfa_with_final_nodes.dot",
-                                       "actual_nfa_with_final_nodes.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_with_final_nodes.dot", "actual_nfa_with_final_nodes.dot"
+    )
 
 
 def test_convert_graph_to_nfa_with_final_start_nodes():
     gw = GraphWorker(MultiDiGraph([(1, 0), (1, 2)]))
-    gw.convert_to_nfa(final={0}, start={1}).write_as_dot("actual_nfa_with_final_start_nodes.dot")
+    gw.convert_to_nfa(final={0}, start={1}).write_as_dot(
+        "actual_nfa_with_final_start_nodes.dot"
+    )
 
-    assert check_is_dot_files_the_same("expected_nfa_with_final_start_nodes.dot",
-                                       "actual_nfa_with_final_start_nodes.dot")
+    assert check_is_dot_files_the_same(
+        "expected_nfa_with_final_start_nodes.dot",
+        "actual_nfa_with_final_start_nodes.dot",
+    )
 
 
 def test_convert_two_cycled_graph_to_nfa():
@@ -94,5 +110,6 @@ def test_convert_two_cycled_graph_to_nfa():
     )
     gw.convert_to_nfa(final={0}).write_as_dot("actual_two_cycled_graph_to_nfa.dot")
 
-    assert check_is_dot_files_the_same("expected_two_cycled_graph_to_nfa.dot",
-                                       "actual_two_cycled_graph_to_nfa.dot")
+    assert check_is_dot_files_the_same(
+        "expected_two_cycled_graph_to_nfa.dot", "actual_two_cycled_graph_to_nfa.dot"
+    )

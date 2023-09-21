@@ -35,9 +35,7 @@ def test_regex_to_minimal_dfa_or():
     actual = regex_to_minimal_dfa(Regex("test_one|test_two"))
     actual.write_as_dot("actual_dfa_or.dot")
 
-    assert check_is_dot_files_the_same(
-        "expected_dfa_or.dot", "actual_dfa_or.dot"
-    )
+    assert check_is_dot_files_the_same("expected_dfa_or.dot", "actual_dfa_or.dot")
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
@@ -67,7 +65,9 @@ def test_regex_to_minimal_dfa_parens():
     actual = regex_to_minimal_dfa(Regex("(test)"))
     actual.write_as_dot("actual_dfa_parens.dot")
 
-    assert check_is_dot_files_the_same("expected_dfa_parens.dot", "actual_dfa_parens.dot")
+    assert check_is_dot_files_the_same(
+        "expected_dfa_parens.dot", "actual_dfa_parens.dot"
+    )
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
     )
@@ -77,9 +77,11 @@ def test_regex_to_minimal_dfa_hard_expr_one():
     actual = regex_to_minimal_dfa(Regex("(0|1)*111"))
     actual.write_as_dot("actual_dfa_hard_expr.dot")
 
-    assert check_is_dot_files_the_same("expected_dfa_hard_expr_one.dot",
-                                       "actual_dfa_hard_expr.dot") or check_is_dot_files_the_same(
-        "expected_dfa_hard_expr_two.dot", "actual_dfa_hard_expr.dot")
+    assert check_is_dot_files_the_same(
+        "expected_dfa_hard_expr_one.dot", "actual_dfa_hard_expr.dot"
+    ) or check_is_dot_files_the_same(
+        "expected_dfa_hard_expr_two.dot", "actual_dfa_hard_expr.dot"
+    )
 
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
@@ -90,8 +92,9 @@ def test_regex_to_minimal_dfa_hard_two_expr():
     actual = regex_to_minimal_dfa(Regex("(0|1)*1.1.1"))
     actual.write_as_dot("actual_dfa_hard_two_expr.dot")
 
-    assert check_is_dot_files_the_same("expected_dfa_hard_two_expr.dot",
-                                       "actual_dfa_hard_two_expr.dot")
+    assert check_is_dot_files_the_same(
+        "expected_dfa_hard_two_expr.dot", "actual_dfa_hard_two_expr.dot"
+    )
 
     assert actual.is_deterministic() and len(actual.states) == len(
         actual.minimize().states
