@@ -3,6 +3,7 @@ from os import path
 from networkx import MultiDiGraph
 
 from project.graph.graph_worker import GraphWorker
+from tests.utils import check_is_dot_files_the_same
 
 
 def test_empty_graph():
@@ -37,9 +38,6 @@ def test_save_as_dot_file():
     actual_path = path.join(curr_path, "actual_graph_gw.dot")
 
     gw = GraphWorker(graph)
-
     gw.save_as_dot_file(actual_path)
 
-    with open(expected_path, "r") as expected_file:
-        with open(actual_path, "r") as actual_file:
-            assert expected_file.read() == actual_file.read()
+    assert check_is_dot_files_the_same(expected_path, actual_path)

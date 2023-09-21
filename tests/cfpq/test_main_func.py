@@ -1,6 +1,7 @@
 from os import path
 
 from project.cfpq.func import load_graph_info_by_name, create_and_save_two_cycles_graph
+from tests.utils import check_is_dot_files_the_same
 
 
 def test_load_graph_info_by_name():
@@ -45,6 +46,4 @@ def test_create_and_save_two_cycles_graph():
         path=actual_path,
     )
 
-    with open(expected_path, "r") as expected_file:
-        with open(actual_path, "r") as actual_file:
-            assert expected_file.read() == actual_file.read()
+    assert check_is_dot_files_the_same(expected_path, actual_path)
