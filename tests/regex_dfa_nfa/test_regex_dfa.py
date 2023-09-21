@@ -4,14 +4,9 @@ from pyformlang.finite_automaton import DeterministicFiniteAutomaton
 from pyformlang.regular_expression import Regex
 
 from project.regex_dfa_builder.min_dfa_builder import regex_to_minimal_dfa
+from tests.utils import check_is_dot_files_the_same
 
 CURR_PATH = path.dirname(path.realpath(__file__))
-
-
-def check_is_dot_files_the_same(local_path, path_one, path_two):
-    with open(path.join(local_path, path_one), "r") as expected_file:
-        with open(path.join(local_path, path_two), "r") as actual_file:
-            return sorted(expected_file.readlines()) == sorted(actual_file.readlines())
 
 
 def test_regex_to_minimal_dfa():
@@ -20,7 +15,7 @@ def test_regex_to_minimal_dfa():
 
 def test_regex_to_minimal_dfa_epsilon():
     actual = regex_to_minimal_dfa(Regex("$"))
-    actual.write_as_dot("actual_dfa_epsilon.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_epsilon.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_epsilon.dot", "actual_dfa_epsilon.dot"
@@ -32,7 +27,7 @@ def test_regex_to_minimal_dfa_epsilon():
 
 def test_regex_to_minimal_dfa_star():
     actual = regex_to_minimal_dfa(Regex("test*"))
-    actual.write_as_dot("actual_dfa_star.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_star.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_star.dot", "actual_dfa_star.dot"
@@ -44,7 +39,7 @@ def test_regex_to_minimal_dfa_star():
 
 def test_regex_to_minimal_dfa_or():
     actual = regex_to_minimal_dfa(Regex("test_one|test_two"))
-    actual.write_as_dot("actual_dfa_or.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_or.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_or.dot", "actual_dfa_or.dot"
@@ -56,7 +51,7 @@ def test_regex_to_minimal_dfa_or():
 
 def test_regex_to_minimal_space():
     actual = regex_to_minimal_dfa(Regex("test_one test_two"))
-    actual.write_as_dot("actual_dfa_space.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_space.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_space.dot", "actual_dfa_space.dot"
@@ -68,7 +63,7 @@ def test_regex_to_minimal_space():
 
 def test_regex_to_minimal_dfa_var():
     actual = regex_to_minimal_dfa(Regex("test"))
-    actual.write_as_dot("actual_dfa_var.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_var.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_var.dot", "actual_dfa_var.dot"
@@ -80,7 +75,7 @@ def test_regex_to_minimal_dfa_var():
 
 def test_regex_to_minimal_dfa_parens():
     actual = regex_to_minimal_dfa(Regex("(test)"))
-    actual.write_as_dot("actual_dfa_parens.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_parens.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_parens.dot", "actual_dfa_parens.dot"
@@ -92,7 +87,7 @@ def test_regex_to_minimal_dfa_parens():
 
 def test_regex_to_minimal_dfa_hard_expr_one():
     actual = regex_to_minimal_dfa(Regex("(0|1)*111"))
-    actual.write_as_dot("actual_dfa_hard_expr.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_hard_expr.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_hard_expr_one.dot", "actual_dfa_hard_expr.dot"
@@ -107,7 +102,7 @@ def test_regex_to_minimal_dfa_hard_expr_one():
 
 def test_regex_to_minimal_dfa_hard_two_expr():
     actual = regex_to_minimal_dfa(Regex("(0|1)*1.1.1"))
-    actual.write_as_dot("actual_dfa_hard_two_expr.dot")
+    actual.write_as_dot(path.join(CURR_PATH, "actual_dfa_hard_two_expr.dot"))
 
     assert check_is_dot_files_the_same(
         CURR_PATH, "expected_dfa_hard_two_expr.dot", "actual_dfa_hard_two_expr.dot"
