@@ -1,6 +1,9 @@
 from os import path
 
-from project.cfpq.main import load_graph_info_by_name, create_and_save_two_cycles_graph
+from project.cfpq.func import load_graph_info_by_name, create_and_save_two_cycles_graph
+from tests.utils import check_is_dot_files_the_same
+
+CURR_PATH = path.dirname(path.realpath(__file__))
 
 
 def test_load_graph_info_by_name():
@@ -35,9 +38,7 @@ def test_load_graph_info_by_name():
 
 
 def test_create_and_save_two_cycles_graph():
-    curr_path = path.dirname(path.realpath(__file__))
-    expected_path = path.join(curr_path, "expected_graph_main.dot")
-    actual_path = path.join(curr_path, "actual_graph_main.dot")
+    actual_path = path.join(CURR_PATH, "actual_graph_main.dot")
 
     create_and_save_two_cycles_graph(
         first_cycle=(5, "abc"),
@@ -45,6 +46,6 @@ def test_create_and_save_two_cycles_graph():
         path=actual_path,
     )
 
-    with open(expected_path, "r") as expected_file:
-        with open(actual_path, "r") as actual_file:
-            assert expected_file.read() == actual_file.read()
+    assert check_is_dot_files_the_same(
+        CURR_PATH, "expected_graph_main.dot", "actual_graph_main.dot"
+    )

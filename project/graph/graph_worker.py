@@ -1,6 +1,7 @@
 from cfpq_data import graph_from_csv, download
 from networkx import MultiDiGraph
 from networkx.drawing.nx_pydot import to_pydot
+from pyformlang.finite_automaton import NondeterministicFiniteAutomaton as NonDA
 
 
 class GraphWorker:
@@ -21,6 +22,23 @@ class GraphWorker:
                 label for _, _, label in self.__graph.edges.data("label")
             },
         }
+
+    def convert_to_nfa(self, start: set[int] = None, final: set[int] = None) -> NonDA:
+        node_types = {"is_start": start, "is_final": final}
+
+        for node_type, nodes in node_types.items():
+            if not nodes:
+                view = self.__graph.nodes.data(data=node_type, default=False)
+                nodes = (
+                    set(self.__graph.nodes)
+                    if not any(is_start for _, is_start in view)
+                    else {}
+                )
+
+            for node in nodes:
+                self.__graph.nodes[node][node_type] = True
+
+        return NonDA.from_networkx(self.__graph).remove_epsilon_transitions()
 
     def save_as_dot_file(self, path: str) -> bool:
         return to_pydot(self.__graph).write(path)

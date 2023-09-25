@@ -1,0 +1,14 @@
+digraph  {
+0 [is_final=False, is_start=True, label=0, peripheries=1];
+"0_starting" [height="0.0", label="", shape=None, width="0.0"];
+1 [is_final=False, is_start=True, label=1, peripheries=1];
+"1_starting" [height="0.0", label="", shape=None, width="0.0"];
+2 [is_final=False, is_start=True, label=2, peripheries=1];
+"2_starting" [height="0.0", label="", shape=None, width="0.0"];
+3 [is_final=True, is_start=True, label=3, peripheries=2];
+"3_starting" [height="0.0", label="", shape=None, width="0.0"];
+"0_starting" -> 0  [key=0];
+"1_starting" -> 1  [key=0];
+"2_starting" -> 2  [key=0];
+"3_starting" -> 3  [key=0];
+}
