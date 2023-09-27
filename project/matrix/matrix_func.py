@@ -91,11 +91,11 @@ def intersect_matrices(first_matrix: Matrix, second_matrix: Matrix) -> Matrix:
     def check_is_valid(first, second, state_type):
         if state_type:
             return (
-                    first in first_matrix.start_states
-                    and second in second_matrix.start_states
+                first in first_matrix.start_states
+                and second in second_matrix.start_states
             )
         return (
-                first in first_matrix.final_states and second in second_matrix.final_states
+            first in first_matrix.final_states and second in second_matrix.final_states
         )
 
     labels = first_matrix.labels.keys() & second_matrix.labels.keys()
@@ -112,8 +112,8 @@ def intersect_matrices(first_matrix: Matrix, second_matrix: Matrix) -> Matrix:
     for state_one in first_indexes:
         for state_two in second_indexes:
             new_index = (
-                    first_indexes[state_one] * len(second_indexes)
-                    + second_indexes[state_two]
+                first_indexes[state_one] * len(second_indexes)
+                + second_indexes[state_two]
             )
             new_indexes[new_index] = new_index
 

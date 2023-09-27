@@ -52,7 +52,7 @@ class GraphWorker:
         return NonDA.from_networkx(self.__graph).remove_epsilon_transitions()
 
     def make_regular_request(
-            self, request: Regex, start: set[int] = None, final: set[int] = None
+        self, request: Regex, start: set[int] = None, final: set[int] = None
     ):
         dfa_request = convert_regex_to_minimal_dfa(request)
         graph_nfa = self.convert_to_nfa(start, final)

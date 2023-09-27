@@ -9,7 +9,7 @@ from project.matrix.matrix_func import (
 
 
 def create_automata_from_scratch(
-        transitions: list, starting_states: set = None, final_states: set = None
+    transitions: list, starting_states: set = None, final_states: set = None
 ) -> NondeterministicFiniteAutomaton:
     if not transitions:
         return NondeterministicFiniteAutomaton()
@@ -27,8 +27,8 @@ def create_automata_from_scratch(
 
 
 def intersect_automatas(
-        first_automata: NondeterministicFiniteAutomaton,
-        second_automata: NondeterministicFiniteAutomaton,
+    first_automata: NondeterministicFiniteAutomaton,
+    second_automata: NondeterministicFiniteAutomaton,
 ) -> Matrix:
     return intersect_matrices(
         convert_nfa_to_matrix(first_automata),
@@ -37,10 +37,10 @@ def intersect_automatas(
 
 
 def get_connected_nodes(
-        automata: NondeterministicFiniteAutomaton,
-        start_states: set[int],
-        final_states: set[int],
-        closure: dok_matrix,
+    automata: NondeterministicFiniteAutomaton,
+    start_states: set[int],
+    final_states: set[int],
+    closure: dok_matrix,
 ):
     def check_is_valid(start, final):
         return start in start_states and final in final_states
