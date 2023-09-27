@@ -7,7 +7,6 @@ from pyformlang.regular_expression import Regex
 from project.matrix.matrix_func import get_matrix_transitive_closure
 from project.regex_and_automata.automata_func import (
     intersect_automatas,
-    get_automata_transitive_closure,
     get_connected_nodes,
 )
 from project.regex_and_automata.regex_func import convert_regex_to_minimal_dfa

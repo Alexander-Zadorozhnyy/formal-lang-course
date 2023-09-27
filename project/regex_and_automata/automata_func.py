@@ -3,10 +3,8 @@ from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State
 
 from project.matrix.matrix import Matrix
 from project.matrix.matrix_func import (
-    get_matrix_transitive_closure,
     convert_nfa_to_matrix,
     intersect_matrices,
-    convert_matrix_to_nfa,
 )
 
 
@@ -26,12 +24,6 @@ def create_automata_from_scratch(
     automata.add_transitions(transitions)
 
     return automata
-
-
-def get_automata_transitive_closure(
-        automata: NondeterministicFiniteAutomaton,
-) -> dok_matrix:
-    return get_matrix_transitive_closure(convert_nfa_to_matrix(automata))
 
 
 def intersect_automatas(
