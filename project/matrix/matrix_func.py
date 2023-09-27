@@ -6,6 +6,13 @@ from scipy.sparse import dok_matrix, kron
 from project.matrix.matrix import Matrix
 
 
+def create_labels(shape: tuple[int, int], indexes: list) -> dok_matrix:
+    labels = dok_matrix(shape, dtype=bool)
+    for label_index in indexes:
+        labels[label_index] = 1
+    return labels
+
+
 def get_matrix_transitive_closure(matrix: Matrix) -> dok_matrix:
     if not matrix.labels.values():
         return dok_matrix((1, 1))
@@ -13,7 +20,7 @@ def get_matrix_transitive_closure(matrix: Matrix) -> dok_matrix:
     len_states = len(matrix.indexes)
 
     summed_decomposition = sum(
-        matrix.labels.values(), start=dok_matrix((len_states, len_states))
+        matrix.labels.values(), start=dok_matrix((len_states, len_states), dtype=bool)
     )
     summed_decomposition.count_nonzero()
 
