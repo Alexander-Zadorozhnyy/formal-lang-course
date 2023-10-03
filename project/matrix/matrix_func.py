@@ -1,7 +1,7 @@
 from itertools import product
 
 from pyformlang.finite_automaton import State, NondeterministicFiniteAutomaton
-from scipy.sparse import dok_matrix, kron
+from scipy.sparse import dok_matrix, kron, vstack, block_diag
 
 from project.matrix.matrix import Matrix
 
@@ -123,3 +123,119 @@ def intersect_matrices(first_matrix: Matrix, second_matrix: Matrix) -> Matrix:
                 final_states.add(new_index)
 
     return Matrix(start_states, final_states, new_indexes, matrix)
+
+
+def create_matrix_front(
+    first_matrix: Matrix, second_matrix: Matrix, start_states: set
+) -> dok_matrix:
+    dim_first, dim_second = len(first_matrix.indexes), len(second_matrix.indexes)
+    front = dok_matrix((dim_first, dim_first + dim_second), dtype=bool)
+
+    row = dok_matrix((1, dim_first), dtype=bool)
+    for i in start_states:
+        row[0, i] = True
+
+    for i in second_matrix.start_states:
+        front[second_matrix.indexes[i], second_matrix.indexes[i]] = True
+        front[second_matrix.indexes[i], dim_second:] = row
+
+    return front
+
+
+def get_matrices_front(
+    first_matrix: Matrix, second_matrix: Matrix, start_states: set, is_single_mode: bool
+) -> dok_matrix:
+    if not is_single_mode:
+        return create_matrix_front(first_matrix, second_matrix, start_states)
+
+    single_state_fronts = [
+        create_matrix_front(first_matrix, second_matrix, {i}) for i in start_states
+    ]
+    return vstack(single_state_fronts)
+
+
+def get_direct_sum_of_matrices(first_matrix: Matrix, second_matrix: Matrix) -> dict:
+    first_labels, second_labels = first_matrix.labels, second_matrix.labels
+
+    return {
+        label: dok_matrix(
+            block_diag((second_matrix.labels[label], first_matrix.labels[label]))
+        )
+        for label in set(first_labels.keys()).intersection(set(second_labels.keys()))
+    }
+
+
+def update_front(matrix: Matrix, front: dok_matrix) -> dok_matrix:
+    new_front = dok_matrix(front.shape, dtype=bool)
+    dim_matrix = len(matrix.indexes)
+
+    for i, j in zip(*front.nonzero()):
+        if j < dim_matrix and front[i, dim_matrix:].count_nonzero() > 0:
+            new_index = i - (i % dim_matrix) + j
+            new_front[new_index, j] = True
+            new_front[new_index, dim_matrix:] += front[i, dim_matrix:]
+
+    return new_front
+
+
+def extruct_valid_nodes(
+    first_matrix: Matrix,
+    second_matrix: Matrix,
+    start_states: list,
+    visited: dok_matrix,
+    is_single_mode: bool,
+) -> set:
+    result = set()
+    first_states = list(first_matrix.indexes.keys())
+    second_states = list(second_matrix.indexes.keys())
+    second_dim = len(second_matrix.indexes)
+
+    for i, j in zip(*visited.nonzero()):
+        if (
+            second_dim <= j
+            and first_states[j - second_dim] in first_matrix.final_states
+            and second_states[i % second_dim] in second_matrix.final_states
+        ):
+            value = (
+                j - second_dim
+                if not is_single_mode
+                else (
+                    start_states[i % (len(start_states) - 1)],
+                    j - second_dim,
+                )
+            )
+
+            result.add(value)
+
+    return result
+
+
+def make_matrices_bfs_regular_request(
+    first_matrix: Matrix, second_matrix: Matrix, is_single_mode: bool
+) -> set:
+    if not first_matrix.start_states:
+        return set()
+
+    start_states = [first_matrix.indexes[s] for s in first_matrix.start_states]
+
+    front = get_matrices_front(
+        first_matrix, second_matrix, set(start_states), is_single_mode
+    )
+
+    direct_sum = get_direct_sum_of_matrices(first_matrix, second_matrix)
+    visited = dok_matrix(front.shape, dtype=bool)
+
+    visited_save = None
+    while (
+        visited_save is None or visited_save.count_nonzero() != visited.count_nonzero()
+    ):
+        visited_save = visited.copy()
+        for direct_matrix in direct_sum.values():
+            next_front = (front if front is not None else visited) @ direct_matrix
+            visited += update_front(second_matrix, next_front)
+
+        front = None
+
+    return extruct_valid_nodes(
+        first_matrix, second_matrix, start_states, visited, is_single_mode
+    )
