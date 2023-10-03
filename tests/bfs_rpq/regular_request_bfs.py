@@ -3,8 +3,10 @@ from pyformlang.regular_expression import Regex
 
 from project.cfpq.utils import create_labeled_two_cycles_graph
 from project.graph.graph_worker import GraphWorker
-from tests.bfs_rpq.cases_for_testing import regular_request_bfs_cases_without_cycles, \
-    regular_request_bfs_cases_with_cycles
+from tests.bfs_rpq.cases_for_testing import (
+    regular_request_bfs_cases_without_cycles,
+    regular_request_bfs_cases_with_cycles,
+)
 
 
 def test_bfs_without_cycles() -> None:
