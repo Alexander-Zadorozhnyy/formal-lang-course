@@ -36,7 +36,8 @@ def test_matrix_intersection():
     for test_case in matrix_intersection_cases:
         expected = Matrix(
             labels={
-                k: create_labels(*v) for k, v in test_case["expected_labels"].items()
+                k: create_labels(*v, typed_matrix=dok_matrix)
+                for k, v in test_case["expected_labels"].items()
             },
             start_states=test_case["expected_start"],
             final_states=test_case["expected_final"],
@@ -45,7 +46,7 @@ def test_matrix_intersection():
         actual = intersect_matrices(
             Matrix(
                 labels={
-                    k: create_labels(*v)
+                    k: create_labels(*v, typed_matrix=dok_matrix)
                     for k, v in test_case["actual_1_labels"].items()
                 },
                 start_states=test_case["actual_1_start"],
@@ -54,13 +55,14 @@ def test_matrix_intersection():
             ),
             Matrix(
                 labels={
-                    k: create_labels(*v)
+                    k: create_labels(*v, typed_matrix=dok_matrix)
                     for k, v in test_case["actual_2_labels"].items()
                 },
                 start_states=test_case["actual_2_start"],
                 final_states=test_case["actual_2_final"],
                 indexes=test_case["actual_2_indexes"],
             ),
+            dok_matrix,
         )
 
         assert {k: v.toarray().tolist() for k, v in actual.labels.items()} == {

@@ -1,4 +1,5 @@
 from networkx import MultiDiGraph
+from scipy.sparse import dok_matrix
 
 from project.graph.graph_worker import GraphWorker
 from project.matrix.matrix_func import create_labels
@@ -18,5 +19,8 @@ def test_get_connected_nodes():
             graph_nfa,
             automata_get_connected_nodes_test_cases[test_index][0],
             automata_get_connected_nodes_test_cases[test_index][1],
-            create_labels(*automata_get_connected_nodes_test_cases[test_index][2]),
+            create_labels(
+                *automata_get_connected_nodes_test_cases[test_index][2],
+                typed_matrix=dok_matrix
+            ),
         )
