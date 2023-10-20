@@ -1,5 +1,6 @@
-from typing import Union, Type
+from typing import Union, Type, Set, List, Any
 
+import cfpq_data
 from cfpq_data import graph_from_csv, download
 from networkx import MultiDiGraph
 from networkx.drawing.nx_pydot import to_pydot
@@ -38,6 +39,13 @@ class GraphWorker:
     def load_graph_by_name(self, name: str) -> None:
         self.__graph = graph_from_csv(path=download(name))
 
+    def generate_multiple_source_percent(
+        self, percent: float, seed: Union[int, None] = None
+    ) -> Set[int]:
+        return cfpq_data.generate_multiple_source_percent(
+            graph=self.__graph, percent=percent, seed=seed
+        )
+
     def update_graph(self, graph: MultiDiGraph) -> None:
         self.__graph = graph
 
@@ -49,6 +57,9 @@ class GraphWorker:
                 label for _, _, label in self.__graph.edges.data("label")
             },
         }
+
+    def get_sorted_labels_list(self) -> List[Any]:
+        return cfpq_data.get_sorted_labels(self.__graph)
 
     def convert_to_nfa(self, start: set[int] = None, final: set[int] = None) -> NonDA:
         node_types = {"is_start": start, "is_final": final}
