@@ -3,7 +3,7 @@ from pathlib import Path
 
 from project.cfg.cfg_func import read_context_free_grammar, convert_cfg_to_weak_cnf
 
-from pyformlang.cfg import CFG, Variable, Terminal, Production, Epsilon
+from pyformlang.cfg import CFG, Variable, Terminal, Production
 
 from tests.cfg.cases_for_testing import (
     file_tests,
