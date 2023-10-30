@@ -1,4 +1,3 @@
-from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Union
@@ -24,7 +23,7 @@ class ECFG:
         start_symbol = cfg.start_symbol if cfg.start_symbol else Variable(start_symbol)
 
         variables = set(cfg.variables) | {start_symbol}
-        productions = defaultdict()
+        productions = {production.head: Regex("") for production in cfg.productions}
 
         productions = {
             production.head: productions[production.head].union(
@@ -43,7 +42,7 @@ class ECFG:
 
     @staticmethod
     def convert_str_to_ecfg(str_ecfg: str, start_symbol: str = "S"):
-        lines = list(filter(lambda x: not x, map(str.strip, str_ecfg.splitlines())))
+        lines = list(filter(lambda x: x != "", map(str.strip, str_ecfg.splitlines())))
 
         variables = set()
         productions = {}
@@ -54,8 +53,8 @@ class ECFG:
             if len(split_line) != 2:
                 raise ValueError("Invalid production structure!")
 
-            head, body = Variable(split_line[0]), Regex(split_line[1])
-            variables |= head
+            head, body = Variable(split_line[0].replace(" ", "")), Regex(split_line[1])
+            variables |= {head}
             productions[head] = body
 
         return ECFG(

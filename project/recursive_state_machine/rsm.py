@@ -9,7 +9,7 @@ from project.ecfg.ecfg import ECFG
 
 @dataclass
 class RSM:
-    start: Variable
+    start_symbol: Variable
     automatas: dict
 
     @staticmethod
@@ -26,11 +26,11 @@ class RSM:
             key: automata.to_epsilon_nfa() for key, automata in ecfg.productions.items()
         }
 
-        return RSM(start=ecfg.start_symbol, automatas=automatas)
+        return RSM(start_symbol=ecfg.start_symbol, automatas=automatas)
 
     def minimize(self):
         return RSM(
-            start=self.start,
+            start_symbol=self.start_symbol,
             automatas={
                 key: automata.minimize() for key, automata in self.automatas.items()
             },
