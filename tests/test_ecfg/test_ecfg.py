@@ -11,11 +11,11 @@ from tests.test_ecfg.cases_for_testing import ecfg_cases, start_symbol
 def test_convert_cfg_to_ecfg():
     file_names = [
         file
-        for file in os.listdir(os.path.join(os.getcwd(), "../", "cfg"))
+        for file in os.listdir(os.path.join(os.path.dirname(os.getcwd()), "cfg"))
         if ".cfg" in file
     ]
     file_paths = [
-        Path(os.path.join(os.path.join(os.getcwd(), "../", "cfg"), file))
+        Path(os.path.join(os.path.join(os.path.dirname(os.getcwd()), "cfg"), file))
         for file in file_names
     ]
 
