@@ -1,6 +1,6 @@
 from project.ecfg.ecfg import ECFG
 from project.recursive_state_machine.rsm import RSM
-from tests.test_ecfg.cases_for_testing import ecfg_cases, start_symbol
+from tests.cfg_ecfg.cases_for_testing_ecfg import ecfg_cases, start_symbol
 
 
 def test_convert_ecfg_to_rsm():
