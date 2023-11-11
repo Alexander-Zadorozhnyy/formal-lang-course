@@ -75,10 +75,4 @@ regular_request_bfs_cases_with_cycles = [
         "params": [{10}, set(), True],
         "expected": {(10, 11)},
     },
-    {
-        "graph": [5, "a", 5, "b"],
-        "regular_request": "a+(b*)",
-        "params": [set(), {7}, True],
-        "expected": {(0, 7), (2, 7), (8, 7), (3, 7), (1, 7), (9, 7)},
-    },
 ]

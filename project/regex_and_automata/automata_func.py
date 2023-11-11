@@ -1,4 +1,6 @@
-from scipy.sparse import dok_matrix
+from typing import Union, Type
+
+from scipy.sparse import dok_matrix, lil_matrix, csr_matrix, csc_matrix
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State
 
 from project.matrix.matrix import Matrix
@@ -29,10 +31,14 @@ def create_automata_from_scratch(
 def intersect_automatas(
     first_automata: NondeterministicFiniteAutomaton,
     second_automata: NondeterministicFiniteAutomaton,
+    typed_matrix: Union[
+        Type[lil_matrix], Type[dok_matrix], Type[csr_matrix], Type[csc_matrix]
+    ] = dok_matrix,
 ) -> Matrix:
     return intersect_matrices(
         convert_nfa_to_matrix(first_automata),
         convert_nfa_to_matrix(second_automata),
+        typed_matrix,
     )
 
 
@@ -40,7 +46,7 @@ def get_connected_nodes(
     automata: NondeterministicFiniteAutomaton,
     start_states: set[int],
     final_states: set[int],
-    closure: dok_matrix,
+    closure: Union[lil_matrix, dok_matrix, csr_matrix, csc_matrix],
 ):
     def check_is_valid(start, final):
         return start in start_states and final in final_states
