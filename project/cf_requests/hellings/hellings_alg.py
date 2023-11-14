@@ -25,7 +25,7 @@ def helling_helper(prev, next, v_prod, n_elem, cond):
     next.update(state)
 
 
-def hellings(graph: nx.MultiDiGraph, cfg: Union[Path, CFG], start_variable: str):
+def hellings(graph: nx.MultiDiGraph, cfg: Union[Path, CFG], start_variable: str = "S"):
     weak_cnf = convert_cfg_to_weak_cnf(cfg, start_variable)
 
     e_prod = [p.head.value for p in weak_cnf.productions if not p.body]
@@ -58,28 +58,3 @@ def hellings(graph: nx.MultiDiGraph, cfg: Union[Path, CFG], start_variable: str)
         )
 
     return prev
-
-
-def cfpq(
-    graph: nx.MultiDiGraph,
-    cfg: Union[Path, CFG],
-    start_nodes: set[int] = None,
-    final_nodes: set[int] = None,
-    start_variable: str = "S",
-):
-    if not start_nodes:
-        start_nodes = graph.nodes
-
-    if not final_nodes:
-        final_nodes = graph.nodes
-
-    return {
-        sn: set(
-            final
-            for start, var, final in list(
-                filter(lambda x: x[0] == sn, hellings(graph, cfg, start_variable))
-            )
-            if final in final_nodes
-        )
-        for sn in start_nodes
-    }
