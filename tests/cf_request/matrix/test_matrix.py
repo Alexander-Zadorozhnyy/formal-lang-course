@@ -3,7 +3,7 @@ from pathlib import Path
 
 from networkx.drawing.nx_pydot import read_dot
 
-from project.cf_requests.matrix.matrix_alg import matrix_transitive_closure
+from project.cf_requests.matrix.matrix_alg import get_matrix_transitive_closure
 from project.cf_requests.matrix.matrix_cfpq import cfpq
 
 from tests.cf_request.cases_for_testing import (
@@ -22,7 +22,7 @@ def test_matrix_algorithms():
         if isinstance(graph, str):
             graph = read_dot(Path(os.path.join(CURR_PATH, "../static", "graph", graph)))
 
-        assert matrix_transitive_closure(graph, cfg) == expected_result
+        assert get_matrix_transitive_closure(graph, cfg) == expected_result
 
 
 def test_matrix_cfpq():

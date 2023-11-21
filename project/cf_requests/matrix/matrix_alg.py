@@ -32,11 +32,13 @@ def get_boolean_decomposition(graph: nx.MultiDiGraph, weak_cnf: CFG) -> dict:
     return boolean_decomposition
 
 
-def matrix_transitive_closure(
-        graph: nx.MultiDiGraph, cfg: Union[Path, CFG], start_variable: str = "S"
+def get_matrix_transitive_closure(
+    graph: nx.MultiDiGraph, cfg: Union[Path, CFG], start_variable: str = "S"
 ) -> set:
     def update_matrix(matrix, prod):
-        matrix[prod.head.value] += matrix[prod.body[0].value] @ matrix[prod.body[1].value]
+        matrix[prod.head.value] += (
+            matrix[prod.body[0].value] @ matrix[prod.body[1].value]
+        )
         return matrix
 
     weak_cnf = convert_cfg_to_weak_cnf(cfg, start_variable)
@@ -54,5 +56,7 @@ def matrix_transitive_closure(
             curr = boolean_decomposition[v_prod[-1].head.value].nnz
 
     return {
-        (u, var, v) for var in weak_cnf.variables for u, v in zip(*boolean_decomposition[var].nonzero())
+        (u, var, v)
+        for var in weak_cnf.variables
+        for u, v in zip(*boolean_decomposition[var].nonzero())
     }
