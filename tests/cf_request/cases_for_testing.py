@@ -1,6 +1,6 @@
 algorithms_test_cases = [
-    # ("1.dot", "1.cfg", set()),
-    # ("2.dot", "1.cfg", set()),
+    ("1.dot", "1.cfg", set()),
+    ("2.dot", "1.cfg", set()),
     ("2.dot", "3.cfg", {(1, "P", 2)}),
     ("3.dot", "4.cfg", {(1, "S", 2)}),
     ("3.dot", "3.cfg", {(1, "P", 2), (1, "S", 3), (2, "Q", 3)}),
