@@ -22,11 +22,11 @@ def cfpq(
 
     return {
         sn: set(
-            int(final)
+            final
             for start, var, final in list(
-                filter(lambda x: int(x[0]) == sn, hellings(graph, cfg, start_variable))
+                filter(lambda x: x[0] == sn, hellings(graph, cfg, start_variable))
             )
-            if int(final) in final_nodes
+            if final in final_nodes
         )
         for sn in start_nodes
     }
