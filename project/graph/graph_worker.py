@@ -66,7 +66,8 @@ class GraphWorker:
 
         for node_type, nodes in node_types.items():
             if not nodes:
-                nodes = self.__get_nodes_by_type(node_type)
+                dt = self.__get_nodes_by_type(node_type)
+                nodes = set(filter(lambda x: x != "\\n", dt))
 
             for node in nodes:
                 self.__graph.nodes[node][node_type] = True

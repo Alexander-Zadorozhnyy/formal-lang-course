@@ -7,3 +7,14 @@ class Matrix:
     final_states: set
     indexes: dict
     labels: dict
+
+    def get_state_by_index(self, index):
+        for state, idx in self.indexes.items():
+            if idx == index:
+                return state
+
+    def get_number_of_indexes(self):
+        return len(self.indexes.keys())
+
+    def get_number_of_labels(self):
+        return len(self.labels.keys())
