@@ -18,3 +18,9 @@ class Matrix:
 
     def get_number_of_labels(self):
         return len(self.labels.keys())
+
+    def is_start(self, state):
+        return state in self.start_states
+
+    def is_final(self, state):
+        return state in self.final_states
