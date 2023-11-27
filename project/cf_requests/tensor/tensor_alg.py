@@ -60,7 +60,9 @@ def get_tensor_transitive_closure(
                 rsm_matrix.get_state_by_index(j // number_of_indexes),
             )
 
-            if not rsm_matrix.is_start(start_state) or not rsm_matrix.is_final(final_state):
+            if not rsm_matrix.is_start(start_state) or not rsm_matrix.is_final(
+                final_state
+            ):
                 continue
 
             value = start_state.value[0]
