@@ -33,7 +33,7 @@ def hellings(graph: nx.MultiDiGraph, cfg: Union[Path, CFG], start_variable: str 
     v_prod = {prod for prod in weak_cnf.productions if len(prod.body) == 2}
 
     prev = {(v, h, v) for v in range(graph.number_of_nodes()) for h in e_prod} | {
-        (u, prod.head.value, v)
+        (int(u), prod.head.value, int(v))
         for u, v, label in graph.edges(data=True)
         for prod in t_prod
         if prod.body[0].value == label["label"]

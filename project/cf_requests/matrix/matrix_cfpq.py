@@ -4,16 +4,16 @@ from typing import Union
 import networkx as nx
 from pyformlang.cfg import CFG
 
-from project.cf_requests.hellings.hellings_alg import hellings
+from project.cf_requests.matrix.matrix_alg import get_matrix_transitive_closure
 
 
 def cfpq(
     graph: nx.MultiDiGraph,
-    cfg: Union[Path, CFG],
-    start_nodes: set[int] = None,
-    final_nodes: set[int] = None,
+    request: Union[Path, CFG],
+    start_nodes: set = None,
+    final_nodes: set = None,
     start_variable: str = "S",
-):
+) -> dict:
     if not start_nodes:
         start_nodes = set(map(int, filter(lambda x: x != "\\n", graph.nodes)))
 
@@ -24,7 +24,10 @@ def cfpq(
         sn: set(
             final
             for start, var, final in list(
-                filter(lambda x: x[0] == sn, hellings(graph, cfg, start_variable))
+                filter(
+                    lambda x: x[0] == sn,
+                    get_matrix_transitive_closure(graph, request, start_variable),
+                )
             )
             if final in final_nodes
         )
