@@ -73,10 +73,10 @@ expr ->
 
 graph ->
       var
-    | REGEX 
+    | REGEX
     | CFG
-    | 'load_dot' '(' (var | SRT) ')'
-    | 'load_graph' '(' (var | SRT) ')'
+    | 'load_dot' '(' (var | STR) ')'
+    | 'load_graph' '(' (var | STR) ')'
     | graph '.' 'set_start_states' '(' set? ')'
     | graph '.' 'set_finals_states' '(' set? ')'
     | graph '.' 'add_start_states' '(' set ')'
@@ -102,7 +102,7 @@ set ->
 
 bool ->
       var
-    | 'true' 
+    | 'true'
     | 'false'
     | 'not' SPACES bool
     | bool SPACES '&&' SPACES bool
@@ -115,7 +115,7 @@ pattern ->
   | var
   | '(' pattern ',' pattern ')'
   | '(' pattern ',' pattern ',' pattern ')'
-  
+
 var -> [a-zA-Z_][a-zA-Z_0-9]*
 
 REGEX -> 'r' STR
