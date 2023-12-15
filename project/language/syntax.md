@@ -125,7 +125,7 @@ val -> STR | INT
 
 STR -> '"' ~[\n]* '"'
 
-INT -> '-'? [1-9][0-9]*
+INT -> 0 | '-'? [1-9][0-9]*
 
 COMMENTS -> (COMMENT EOL+ )*
 COMMENT -> '#' ~[\n]*
