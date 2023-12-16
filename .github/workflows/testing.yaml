@@ -36,6 +36,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Set up java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
       # Install requirements
       - name: Install requirements
 
@@ -54,6 +60,10 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
+
+      - name: Parser generation
+        working-directory: project/language
+        run: antlr4 GraphLang.g4 -Dlanguage=Python3
 
       - name: Test
         run: |
