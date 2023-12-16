@@ -1,7 +1,5 @@
 grammar GraphLang;
 
-//prog : EOL* (COMMENTS stmt (SPACES COMMENT)? EOL+ )* COMMENTS? ;
-//prog : EOL* (COMMENTS stmt (SPACES COMMENT)? EOL+)* (stmt COMMENT?)? EOF;
 prog : EOL* ((COMMENT EOL+)* stmt EOL+)* (stmt COMMENT?)? EOF;
 
 stmt :
